@@ -16,8 +16,8 @@ load_dotenv(find_dotenv(), override=True)
 import importlib.util
 import subprocess
 
-if importlib.util.find_spec(semantic_router):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", semantic_router])
+if importlib.util.find_spec("semantic-router"):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "semantic-router"])
 
 
 from tiktoken import get_encoding
@@ -268,11 +268,11 @@ def main(retriever: WeaviateWCS):
         )
 
         if enable_text2sql:
-            route = router(query)
+            route = router(query).name
         else:
             route = None
 
-        if route:
+        if route == "sql":
             if guest_input:
                 query = query + " where {} is the guest".format(guest_input)
             response = ts(query)

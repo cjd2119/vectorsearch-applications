@@ -268,11 +268,11 @@ def main(retriever: WeaviateWCS):
         )
 
         if enable_text2sql:
-            route = router(query)
+            route = router(query).name
         else:
             route = None
 
-        if route:
+        if route == "sql":
             if guest_input:
                 query = query + " where {} is the guest".format(guest_input)
             response = ts(query)
